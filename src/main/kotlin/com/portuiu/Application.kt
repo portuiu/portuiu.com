@@ -33,7 +33,7 @@ class LayoutTemplate: Template<HTML> {
                             +" | "
                         }
                         td {
-                            a("/about") {
+                            a("/posts/about.html") {
                                 +"About me"
                             }
                         }
@@ -43,14 +43,6 @@ class LayoutTemplate: Template<HTML> {
                         td {
                             a("https://github.com/portuiu/portuiu.com") {
                                 +"Repo"
-                            }
-                        }
-                        td {
-                            +" | "
-                        }
-                        td{
-                            a("/wishlist"){
-                                +"Wishlist"
                             }
                         }
                     }
@@ -64,7 +56,7 @@ class LayoutTemplate: Template<HTML> {
                 ul {
                     li {
                         a("/posts/report1.html"){
-                           +"Random Forest, Trees, and Stumps"
+                           +"Example of blog post"
                         }
                     }
                 }
@@ -82,9 +74,9 @@ fun main() {
             }
 
             get("/posts/{post_id}"){
-                val headerMenu = """<table class="header-menu"><tbody><tr><td><a href="/">Blog</a></td><td> | </td><td><a href="/about">About me</a></td><td> | </td><td><a href="https://github.com/portuiu/portuiu.com">Repo</a></td><td> | </td><td><a href="/wishlist">Wishlist</a></td></tr></tbody></table><style>table td{color:#fff}a,a:link{text-decoration:none;color:#7d1}a:active,a:hover{cursor:pointer;text-decoration:underline}.header-menu{border:0;border-spacing:20px;padding:0;border-collapse:separate;text-align:center;width:700px;margin:auto} </style>"""
+                val headerMenu = """<table class="header-menu"><tbody><tr><td><a href="/">Blog</a></td><td> | </td><td><a href="/posts/about.html">About me</a></td><td> | </td><td><a href="https://github.com/portuiu/portuiu.com">Repo</a></td></tr></tbody></table><style>table td{color:#fff}a,a:link{text-decoration:none;color:#7d1}a:active,a:hover{cursor:pointer;text-decoration:underline}.header-menu{border:0;border-spacing:20px;padding:0;border-collapse:separate;text-align:center;width:700px;margin:auto} </style>"""
                 var reportContent = File("pages/"+call.parameters["post_id"]).readText(Charsets.UTF_8);
-                val content = """<div><div class="notebook_content">""" + reportContent.substringAfter("""<div><div class="notebook_content">""").substringBefore("<style>.authTokens__title")
+                val content = """<div><div class="notebook_content">""" + reportContent.substringAfter("""<div><div class="notebook_content">""").substringBefore("<style>.popup")
                 reportContent = reportContent.replace(content, "");
                 reportContent = reportContent.replace("</style><style>html { overflow: auto; }</style></body></html>", "</style><style>html { overflow: auto; }</style>" + content);
                 reportContent = reportContent.replace("""<html lang="en" theme="idea">""", """<html lang="en" theme="dark-old">""");
@@ -268,6 +260,8 @@ fun main() {
             static("pages") {
                 files("pages")
             }
+
+
         }
     }.start(wait = true)
 }
