@@ -55,8 +55,8 @@ class LayoutTemplate: Template<HTML> {
                 }
                 ul {
                     li {
-                        a("/posts/report1.html"){
-                           +"Example of blog post"
+                        a("/posts/foreign_stocks_overview.html"){
+                           +"Risks and returns of foreign stocks available at Russian broker"
                         }
                     }
                 }
@@ -76,11 +76,18 @@ fun main() {
             get("/posts/{post_id}"){
                 val headerMenu = """<table class="header-menu"><tbody><tr><td><a href="/">Blog</a></td><td> | </td><td><a href="/posts/about.html">About me</a></td><td> | </td><td><a href="https://github.com/portuiu/portuiu.com">Repo</a></td></tr></tbody></table><style>table td{color:#fff}a,a:link{text-decoration:none;color:#7d1}a:active,a:hover{cursor:pointer;text-decoration:underline}.header-menu{border:0;border-spacing:20px;padding:0;border-collapse:separate;text-align:center;width:700px;margin:auto} </style>"""
                 var reportContent = File("pages/"+call.parameters["post_id"]).readText(Charsets.UTF_8);
-                val content = """<div><div class="notebook_content">""" + reportContent.substringAfter("""<div><div class="notebook_content">""").substringBefore("<style>.popup")
+                val content = """<div><div class="notebook_content">""" + reportContent.substringAfter("""<div><div class="notebook_content">""").substringBeforeLast("<style>.popup")
                 reportContent = reportContent.replace(content, "");
                 reportContent = reportContent.replace("</style><style>html { overflow: auto; }</style></body></html>", "</style><style>html { overflow: auto; }</style>" + content);
+                reportContent = reportContent.replace("<pre class=\"static-editor has-scroll idea\">", "<pre class=\"static-editor has-scroll dark-old\">");
                 reportContent = reportContent.replace("""<html lang="en" theme="idea">""", """<html lang="en" theme="dark-old">""");
                 reportContent = reportContent.replace("""--primary-bg: #303030;""", """--primary-bg: #222222;""");
+                reportContent = reportContent.replace(""".mtk_6_5 { color: #000080; }""", """.mtk_6_5 { color: #cc7832; }""");
+                reportContent = reportContent.replace(""".mtk_6_1 { color: #000000; }""", """.mtk_6_1 { color: #a9b7c6; }""");
+                reportContent = reportContent.replace(""".mtk_6_18 { color: #660099; }""", """.mtk_6_18 { color: #aa4926; }""");
+                reportContent = reportContent.replace(""".mtk_6_4 { color: #008080; }""", """.mtk_6_4 { color: #6a8759; }""");
+                reportContent = reportContent.replace(""".mtk_6_6 { color: #0000ff; }""", """.mtk_6_6 { color: #6897bb; }""");
+                reportContent = reportContent.replace(""".mtk_6_17 { color: #94558d; }""", """.mtk_6_17 { color: #8888c6; }""");
                 reportContent = reportContent.replace("""body {
   font: 12px / 1.25 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";""", "body {font: 10px 'JetBrains Mono', sans-serif;");
                 reportContent = reportContent.replace("""<body data-route="PUBLISHING_PRINT" class="print-page page-print"><div id="MathJax_Message" style="display: none;"></div>""", """<body data-route="PUBLISHING_PRINT" class="print-page page-print"><div id="MathJax_Message" style="display: none;"></div>""" + headerMenu);
