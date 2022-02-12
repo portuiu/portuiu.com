@@ -55,8 +55,13 @@ class LayoutTemplate: Template<HTML> {
                 }
                 ul {
                     li {
-                        a("/posts/foreign_stocks_overview.html"){
-                           +"Risks and returns of foreign stocks available at Russian broker"
+                        a("/posts/modelling_extreme_sp500_returns.html"){
+                            +"Modelling of extreme S&P 500 returns"
+                        }
+                    }
+                    li {
+                        a("/posts/foreign_stocks_overview.html") {
+                            +"Risks and returns of foreign stocks available at Russian broker"
                         }
                     }
                 }
